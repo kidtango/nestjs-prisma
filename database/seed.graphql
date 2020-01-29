@@ -1,0 +1,29 @@
+mutation {
+  first: createRig(
+    data: {
+      serial_number: "A9"
+      drilling_depth_capability: 8000
+      drilling_pressure_capabality: 25000
+    }
+  ) {
+    id
+  }
+  second: createRig(
+    data: {
+      serial_number: "R12"
+      drilling_depth_capability: 3000
+      drilling_pressure_capabality: 5000
+    }
+  ) {
+    id
+  }
+  third: createRig(
+    data: {
+      serial_number: "R16"
+      drilling_depth_capability: 13000
+      drilling_pressure_capabality: 14000
+    }
+  ) {
+    id
+  }
+}

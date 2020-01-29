@@ -1,0 +1,539 @@
+# source: https://eu1.prisma.sh/public-agatepuma-476/my-app/dev
+# timestamp: Wed Jan 29 2020 15:26:16 GMT-0600 (Central Standard Time)
+
+type AggregateRig {
+  count: Int!
+}
+
+type BatchPayload {
+  """
+  The number of nodes that have been affected by the Batch operation.
+  """
+  count: Long!
+}
+
+scalar DateTime
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createRig(data: RigCreateInput!): Rig!
+  updateRig(data: RigUpdateInput!, where: RigWhereUniqueInput!): Rig
+  deleteRig(where: RigWhereUniqueInput!): Rig
+  upsertRig(
+    where: RigWhereUniqueInput!
+    create: RigCreateInput!
+    update: RigUpdateInput!
+  ): Rig!
+  updateManyRigs(
+    data: RigUpdateManyMutationInput!
+    where: RigWhereInput
+  ): BatchPayload!
+  deleteManyRigs(where: RigWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+}
+
+"""
+Information about pagination in a connection.
+"""
+type PageInfo {
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+}
+
+type Query {
+  rigs(
+    where: RigWhereInput
+    orderBy: RigOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Rig]!
+  rig(where: RigWhereUniqueInput!): Rig
+  rigsConnection(
+    where: RigWhereInput
+    orderBy: RigOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): RigConnection!
+
+  """
+  Fetches an object given its ID
+  """
+  node(
+    """
+    The ID of an object
+    """
+    id: ID!
+  ): Node
+}
+
+type Rig implements Node {
+  id: ID!
+  serial_number: String!
+  drilling_depth_capability: Float!
+  drilling_pressure_capabality: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A connection to a list of items.
+"""
+type RigConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [RigEdge]!
+  aggregate: AggregateRig!
+}
+
+input RigCreateInput {
+  id: ID
+  serial_number: String!
+  drilling_depth_capability: Float!
+  drilling_pressure_capabality: Float!
+}
+
+"""
+An edge in a connection.
+"""
+type RigEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Rig!
+
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum RigOrderByInput {
+  id_ASC
+  id_DESC
+  serial_number_ASC
+  serial_number_DESC
+  drilling_depth_capability_ASC
+  drilling_depth_capability_DESC
+  drilling_pressure_capabality_ASC
+  drilling_pressure_capabality_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type RigPreviousValues {
+  id: ID!
+  serial_number: String!
+  drilling_depth_capability: Float!
+  drilling_pressure_capabality: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type RigSubscriptionPayload {
+  mutation: MutationType!
+  node: Rig
+  updatedFields: [String!]
+  previousValues: RigPreviousValues
+}
+
+input RigSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [RigSubscriptionWhereInput!]
+
+  """
+  Logical OR on all given filters.
+  """
+  OR: [RigSubscriptionWhereInput!]
+
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [RigSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RigWhereInput
+}
+
+input RigUpdateInput {
+  serial_number: String
+  drilling_depth_capability: Float
+  drilling_pressure_capabality: Float
+}
+
+input RigUpdateManyMutationInput {
+  serial_number: String
+  drilling_depth_capability: Float
+  drilling_pressure_capabality: Float
+}
+
+input RigWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [RigWhereInput!]
+
+  """
+  Logical OR on all given filters.
+  """
+  OR: [RigWhereInput!]
+
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [RigWhereInput!]
+  id: ID
+
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  serial_number: String
+
+  """
+  All values that are not equal to given value.
+  """
+  serial_number_not: String
+
+  """
+  All values that are contained in given list.
+  """
+  serial_number_in: [String!]
+
+  """
+  All values that are not contained in given list.
+  """
+  serial_number_not_in: [String!]
+
+  """
+  All values less than the given value.
+  """
+  serial_number_lt: String
+
+  """
+  All values less than or equal the given value.
+  """
+  serial_number_lte: String
+
+  """
+  All values greater than the given value.
+  """
+  serial_number_gt: String
+
+  """
+  All values greater than or equal the given value.
+  """
+  serial_number_gte: String
+
+  """
+  All values containing the given string.
+  """
+  serial_number_contains: String
+
+  """
+  All values not containing the given string.
+  """
+  serial_number_not_contains: String
+
+  """
+  All values starting with the given string.
+  """
+  serial_number_starts_with: String
+
+  """
+  All values not starting with the given string.
+  """
+  serial_number_not_starts_with: String
+
+  """
+  All values ending with the given string.
+  """
+  serial_number_ends_with: String
+
+  """
+  All values not ending with the given string.
+  """
+  serial_number_not_ends_with: String
+  drilling_depth_capability: Float
+
+  """
+  All values that are not equal to given value.
+  """
+  drilling_depth_capability_not: Float
+
+  """
+  All values that are contained in given list.
+  """
+  drilling_depth_capability_in: [Float!]
+
+  """
+  All values that are not contained in given list.
+  """
+  drilling_depth_capability_not_in: [Float!]
+
+  """
+  All values less than the given value.
+  """
+  drilling_depth_capability_lt: Float
+
+  """
+  All values less than or equal the given value.
+  """
+  drilling_depth_capability_lte: Float
+
+  """
+  All values greater than the given value.
+  """
+  drilling_depth_capability_gt: Float
+
+  """
+  All values greater than or equal the given value.
+  """
+  drilling_depth_capability_gte: Float
+  drilling_pressure_capabality: Float
+
+  """
+  All values that are not equal to given value.
+  """
+  drilling_pressure_capabality_not: Float
+
+  """
+  All values that are contained in given list.
+  """
+  drilling_pressure_capabality_in: [Float!]
+
+  """
+  All values that are not contained in given list.
+  """
+  drilling_pressure_capabality_not_in: [Float!]
+
+  """
+  All values less than the given value.
+  """
+  drilling_pressure_capabality_lt: Float
+
+  """
+  All values less than or equal the given value.
+  """
+  drilling_pressure_capabality_lte: Float
+
+  """
+  All values greater than the given value.
+  """
+  drilling_pressure_capabality_gt: Float
+
+  """
+  All values greater than or equal the given value.
+  """
+  drilling_pressure_capabality_gte: Float
+  createdAt: DateTime
+
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+}
+
+input RigWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  rig(where: RigSubscriptionWhereInput): RigSubscriptionPayload
+}

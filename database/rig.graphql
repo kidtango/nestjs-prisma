@@ -1,0 +1,8 @@
+type Rig {
+  id: ID! @unique @id
+  serial_number: String!
+  drilling_depth_capability: Float!
+  drilling_pressure_capabality: Float!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
